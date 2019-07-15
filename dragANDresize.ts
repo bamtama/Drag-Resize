@@ -37,7 +37,6 @@ class dragWidget {
         this._opts = opts;
         this._dom = this._opts.dom; //document.querySelector(`.${opts.className}`);
         this._id = new Date().getTime().toString();
-        console.log(new Date().getTime());
         (<HTMLElement>this._dom).dataset.id = this._id;
 
         if (this._opts.parentClassName) {
@@ -76,7 +75,8 @@ class dragWidget {
             document.removeEventListener('mousemove', _this._resizeByHandlerFunc)
         })
     }
-    _initResizable() {
+    _initResizable () {
+        console.log(this._dom)
         let h: Array<String> = [];
         if (this._opts.handlers) {
             if (this._opts.handlers.length === 1 && this._opts.handlers[0] === 'all') {
@@ -110,7 +110,7 @@ class dragWidget {
             }
         })
     }
-    _mouseMoveFunc: any = (ev: MouseEvent) => {
+    _mouseMoveFunc = (ev: MouseEvent) => {
         let [curx, cury] = [ev.clientX, ev.clientY];
         let [movex, movey] = [curx - this._info.x, cury - this._info.y]
 
@@ -137,7 +137,7 @@ class dragWidget {
             this._dom.style.top = ctop + 'px'
         }
     };
-    _resizeChangFromHandler = (changeh: number, changew: number, hanlder: String) => {
+    _resizeChangFromHandler (changeh: number, changew: number, hanlder: String) {
         switch (hanlder) {
             case 'n':
                 if (this._opts.parentClassName) {
@@ -175,7 +175,7 @@ class dragWidget {
                 break;
         }
     }
-    _resizeByHandlerFunc: any = (evt: MouseEvent) => {
+    _resizeByHandlerFunc = (evt: MouseEvent) => {
         let changeh = evt.clientY - this._info.y;
         let changew = evt.clientX - this._info.x;
         this._info.y = evt.clientY;

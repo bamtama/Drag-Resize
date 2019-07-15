@@ -151,7 +151,7 @@
         
     // }
     document.querySelectorAll('.item').forEach(function(ele,ind){
-        new dragWidget({
+        var tmp = new dragWidget({
             dom: ele,
             parentClassName: 'wrap',
             resizable: true,

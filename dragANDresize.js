@@ -50,44 +50,6 @@ var dragWidget = /** @class */ (function () {
                 _this_1._dom.style.top = ctop + 'px';
             }
         };
-        this._resizeChangFromHandler = function (changeh, changew, hanlder) {
-            switch (hanlder) {
-                case 'n':
-                    if (_this_1._opts.parentClassName) {
-                        if (_this_1._info.top + changeh <= 0 || _this_1._info.height - changeh <= 0) {
-                            changeh = 0;
-                        }
-                    }
-                    _this_1._info.top += changeh;
-                    _this_1._info.height -= changeh;
-                    break;
-                case 's':
-                    if (_this_1._opts.parentClassName) {
-                        if (_this_1._info.height + _this_1._info.top + changeh >= _this_1._pInfo.height) {
-                            changeh = 0;
-                        }
-                    }
-                    _this_1._info.height += changeh;
-                    break;
-                case 'w':
-                    if (_this_1._opts.parentClassName) {
-                        if (_this_1._info.left + changew <= 0 || _this_1._info.width - changew <= 0) {
-                            changew = 0;
-                        }
-                    }
-                    _this_1._info.width -= changew;
-                    _this_1._info.left += changew;
-                    break;
-                case 'e':
-                    if (_this_1._opts.parentClassName) {
-                        if (_this_1._info.width + _this_1._info.left + changew >= _this_1._pInfo.width) {
-                            changew = 0;
-                        }
-                    }
-                    _this_1._info.width += changew;
-                    break;
-            }
-        };
         this._resizeByHandlerFunc = function (evt) {
             var changeh = evt.clientY - _this_1._info.y;
             var changew = evt.clientX - _this_1._info.x;
@@ -106,7 +68,6 @@ var dragWidget = /** @class */ (function () {
         this._opts = opts;
         this._dom = this._opts.dom; //document.querySelector(`.${opts.className}`);
         this._id = new Date().getTime().toString();
-        console.log(new Date().getTime());
         this._dom.dataset.id = this._id;
         if (this._opts.parentClassName) {
             var pDom = document.querySelector("." + this._opts.parentClassName);
@@ -145,6 +106,7 @@ var dragWidget = /** @class */ (function () {
     };
     dragWidget.prototype._initResizable = function () {
         var _this_1 = this;
+        console.log(this._dom);
         var h = [];
         if (this._opts.handlers) {
             if (this._opts.handlers.length === 1 && this._opts.handlers[0] === 'all') {
@@ -176,6 +138,44 @@ var dragWidget = /** @class */ (function () {
                 document.addEventListener('mousemove', _this._resizeByHandlerFunc);
             }
         });
+    };
+    dragWidget.prototype._resizeChangFromHandler = function (changeh, changew, hanlder) {
+        switch (hanlder) {
+            case 'n':
+                if (this._opts.parentClassName) {
+                    if (this._info.top + changeh <= 0 || this._info.height - changeh <= 0) {
+                        changeh = 0;
+                    }
+                }
+                this._info.top += changeh;
+                this._info.height -= changeh;
+                break;
+            case 's':
+                if (this._opts.parentClassName) {
+                    if (this._info.height + this._info.top + changeh >= this._pInfo.height) {
+                        changeh = 0;
+                    }
+                }
+                this._info.height += changeh;
+                break;
+            case 'w':
+                if (this._opts.parentClassName) {
+                    if (this._info.left + changew <= 0 || this._info.width - changew <= 0) {
+                        changew = 0;
+                    }
+                }
+                this._info.width -= changew;
+                this._info.left += changew;
+                break;
+            case 'e':
+                if (this._opts.parentClassName) {
+                    if (this._info.width + this._info.left + changew >= this._pInfo.width) {
+                        changew = 0;
+                    }
+                }
+                this._info.width += changew;
+                break;
+        }
     };
     dragWidget.prototype.getDomInfo = function (dom) {
         if (dom) {
